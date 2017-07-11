@@ -6,5 +6,5 @@ Repository to learn rust by creating an HTTP API to retrieve you IP.
 
 ```shell
 cargo run
-curl -i 'http://localhost:4000/v1/ip'
+curl -i 'http://localhost:8080/v1/ip'
 ```
