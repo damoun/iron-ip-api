@@ -1,26 +1,16 @@
-extern crate rustless;
 extern crate iron;
+extern crate rustless;
+
 
 use iron::Iron;
-use rustless::{ Application, Api, Nesting, Versioning };
+use rustless::Application;
+
+
+mod api;
+
 
 fn main() {
-   let  api = Api::build(|api| {
-   	api.version("v1", Versioning::Path);
+    let app = Application::new(self::api::root());
 
-	api.mount(Api::build(|ip_api| {
-	    ip_api.namespace("ip", |ip_ns| {
-	        ip_ns.get("", |endpoint| {
-		    endpoint.handle(|client, _params| {
-		    	let ip = client.request.remote_addr().ip().to_string();
-			client.text(ip)
-		    })
-		})
-	    })
-	}))
-   });
-
-   let app = Application::new(api);
-
-   Iron::new(app).http("0.0.0.0:8080").unwrap();
+    Iron::new(app).http("0.0.0.0:8080").unwrap();
 }
