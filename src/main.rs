@@ -1,16 +1,17 @@
 extern crate iron;
-extern crate rustless;
+extern crate mount;
+extern crate router;
 
 
 use iron::Iron;
-use rustless::Application;
+use mount::Mount;
 
 
 mod api;
 
 
 fn main() {
-    let app = Application::new(self::api::root());
-
-    Iron::new(app).http("0.0.0.0:8080").unwrap();
+    let mut middleware = Mount::new();
+    middleware.mount("/v1", api::middleware());
+    Iron::new(middleware).http("0.0.0.0:8080").unwrap();
 }

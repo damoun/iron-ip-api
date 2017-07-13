@@ -1,12 +1,11 @@
-use rustless::{ Api, Nesting, Versioning };
+use mount::Mount;
 
 
 mod remoteaddr;
 
 
-pub fn root() -> Api {
-    Api::build(|api| {
-        api.version("v1", Versioning::Path);
-        api.mount(remoteaddr::ip("ip"));
-    })
+pub fn middleware() -> Mount {
+    let mut middleware = Mount::new();
+    middleware.mount("/ip", remoteaddr::router());
+    middleware
 }

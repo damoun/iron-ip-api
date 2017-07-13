@@ -1,13 +1,16 @@
-use rustless::{ Nesting, Namespace };
+use router::Router;
+use iron::prelude::*;
+use iron::status;
 
 
-pub fn ip(path: &str) -> Namespace {
-    Namespace::build(path, |namespace| {
-        namespace.get("", |endpoint| {
-            endpoint.handle(|client, _params| {
-                let ip_addr = client.request.remote_addr().ip();
-                client.text(ip_addr.to_string())
-            })
-        });
-    })
+pub fn router() -> Router {
+    let mut router = Router::new();
+    router.get("", retrieve_ip, "ip");
+
+    fn retrieve_ip(request: &mut Request) -> IronResult<Response> {
+        let ip_addr = request.remote_addr.ip();
+        Ok(Response::with((status::Ok, ip_addr.to_string())))
+    };
+ 
+    router
 }

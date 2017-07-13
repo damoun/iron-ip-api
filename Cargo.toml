@@ -4,5 +4,6 @@ version = "0.1.0"
 authors = ["Damien Plenard <damien@plenard.me>"]
 
 [dependencies]
-rustless = { git = "https://github.com/rustless/rustless" }
-iron = { version = "*", optional = false }
+iron = "0.5.*"
+router = "0.5.*"
+mount = "0.3.*"
