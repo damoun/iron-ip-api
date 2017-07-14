@@ -1,3 +1,4 @@
+extern crate hyper;
 extern crate iron;
 extern crate mount;
 extern crate router;
@@ -11,6 +12,7 @@ use logger::Logger;
 
 
 mod api;
+mod headers;
 
 
 fn main() {
