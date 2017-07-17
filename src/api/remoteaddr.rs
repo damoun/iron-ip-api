@@ -10,7 +10,7 @@ pub fn router() -> Router {
 
     fn retrieve_ip(request: &mut Request) -> IronResult<Response> {
         let addr = match request.headers.has::<headers::XForwardedFor>() {
-            true => request.headers.get::<headers::XForwardedFor>().unwrap().addr.ip(),
+            true => request.headers.get::<headers::XForwardedFor>().unwrap().client_ip,
             false => request.remote_addr.ip()
         };
         Ok(Response::with((status::Ok, addr.to_string())))
