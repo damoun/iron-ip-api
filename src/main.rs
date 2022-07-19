@@ -1,4 +1,3 @@
-extern crate hyper;
 extern crate iron;
 extern crate mount;
 extern crate router;
@@ -16,7 +15,7 @@ mod headers;
 
 
 fn main() {
-    env_logger::init().unwrap();
+    env_logger::init();
 
     let mut middleware = Mount::new();
     middleware.mount("/v1", api::middleware());

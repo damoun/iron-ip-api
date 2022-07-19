@@ -1,7 +1,6 @@
 use std::fmt;
 use std::net::IpAddr;
 use std::str::FromStr;
-use hyper;
 use iron;
 
 
@@ -16,7 +15,7 @@ impl iron::headers::Header for XForwardedFor {
         "X-Forwarded-For"
     }
 
-    fn parse_header(raw: &[Vec<u8>]) -> hyper::Result<XForwardedFor> {
+    fn parse_header(raw: &[Vec<u8>]) -> std::result::Result<XForwardedFor, iron::error::HttpError> {
         iron::headers::parsing::from_one_raw_str(raw)
     }
 }
@@ -29,15 +28,15 @@ impl iron::headers::HeaderFormat for XForwardedFor {
 
 
 impl FromStr for XForwardedFor {
-    type Err = hyper::Error;
+    type Err = iron::error::HttpError;
 
-    fn from_str(str: &str) -> hyper::Result<XForwardedFor> {
+    fn from_str(str: &str) -> std::result::Result<XForwardedFor, iron::error::HttpError> {
         let mut ip_addrs: Vec<IpAddr> = Vec::new();
 
         for ip_str in str.split(',').map(str::trim) {
             match ip_str.parse() {
                 Ok(ip) => ip_addrs.push(ip),
-                Err(_) => return Err(hyper::error::Error::Header),
+                Err(_) => return Err(iron::error::HttpError::Header),
             }
         }
 
@@ -48,7 +47,7 @@ impl FromStr for XForwardedFor {
                     proxies_ip: proxies_ip.to_vec(),
                 })
             }
-            None => Err(hyper::error::Error::Header),
+            None => Err(iron::error::HttpError::Header),
         }
     }
 }
