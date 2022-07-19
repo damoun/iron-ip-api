@@ -4,9 +4,8 @@ version = "0.1.1"
 authors = ["Damien Plenard <damien@plenard.me>"]
 
 [dependencies]
-iron = "0.5.*"
-router = "0.5.*"
-mount = "0.3.*"
-logger = "0.3.*"
-env_logger = "0.4.3"
-hyper = "0.10.*"
+iron = "0.6.*"
+router = "0.6.*"
+mount = "0.4.*"
+logger = "0.4.*"
+env_logger = "0.9.*"
