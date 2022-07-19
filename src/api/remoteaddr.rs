@@ -14,7 +14,7 @@ pub fn router() -> Router {
             false => request.remote_addr.ip()
         };
         Ok(Response::with((status::Ok, addr.to_string())))
-    };
+    }
  
     router
 }
